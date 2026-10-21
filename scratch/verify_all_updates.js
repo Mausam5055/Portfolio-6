@@ -31,25 +31,29 @@ async function startChrome() {
 
 async function main() {
   const chromeProcess = await startChrome();
-  const WebSocket = require('ws');
+  const WS = globalThis.WebSocket;
 
   try {
-    const listRes = await fetch('http://127.0.0.1:9222/json/new?http://localhost:3000');
-    const target = await listRes.json();
-    const ws = new WebSocket(target.webSocketDebuggerUrl);
+    const listRes = await fetch('http://127.0.0.1:9222/json/list');
+    const list = await listRes.json();
+    const target = list.find(t => t.type === 'page') || list[0];
+    const ws = new WS(target.webSocketDebuggerUrl);
 
     let id = 1;
     const callbacks = new Map();
 
-    ws.on('message', data => {
-      const msg = JSON.parse(data);
+    ws.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
       if (msg.id && callbacks.has(msg.id)) {
         callbacks.get(msg.id)(msg);
         callbacks.delete(msg.id);
       }
-    });
+    };
 
-    await new Promise(r => ws.on('open', r));
+    await new Promise(r => {
+      if (ws.readyState === 1) return r();
+      ws.onopen = () => r();
+    });
 
     function send(method, params = {}) {
       return new Promise(resolve => {
@@ -61,6 +65,7 @@ async function main() {
 
     await send('Page.enable');
     await send('Runtime.enable');
+    await send('Page.navigate', { url: 'http://localhost:3000' });
     await sleep(3500);
 
     // 1. Check Hello Section text
