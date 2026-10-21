@@ -36,8 +36,8 @@ export default function Home() {
     setActiveCase({
       slug: "resume",
       title: "Resume · Mausam Kar",
-      url: "/resume/Mausam-Kar-Resume.pdf",
-      downloadUrl: "/resume/Mausam-Kar-Resume.pdf",
+      url: "/resume/Mausam_Kar-Resume.pdf",
+      downloadUrl: "/resume/Mausam_Kar-Resume.pdf",
     });
     window.location.hash = "#resume";
   };

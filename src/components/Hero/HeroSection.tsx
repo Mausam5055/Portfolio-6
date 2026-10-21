@@ -368,7 +368,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
                       target="_blank"
                       rel="noopener">Behance</a>
                     <a
-                      href="/resume/Mausam-Kar-Resume.pdf?v=2"
+                      href="/resume/Mausam_Kar-Resume.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => {
@@ -381,7 +381,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResume }) => {
                       data-hash="#resume"
                       data-title="Resume"
                       data-back="Back"
-                      data-download="Mausam-Kar-Resume.pdf">Resume</a>
+                      data-download="Mausam_Kar-Resume.pdf">Resume</a>
                   </div>
                 </div>
               </div>
